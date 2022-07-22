@@ -1,0 +1,120 @@
+# Banco_Dados_22-07-
+-- Active: 1657905416266@@127.0.0.1@3306@2info3_22_mod1
+
+SELECT * from clientes;
+
+SELECT nome, email, endereco_cobranca
+FROM clientes;
+
+SELECT cod_cliente,nome, email, endereco_cobranca
+FROM clientes
+WHERE cod_cliente = 5;
+
+SELECT clientes.cod_cliente,nome, texto, dth,desc_produto
+FROM clientes, comentario, produtos
+WHERE clientes.cod_cliente>=5  AND
+clientes.cod_cliente <=8 and
+clientes.cod_cliente = comentario.cod_cliente AND 
+comentario.cod_produto = produtos.cod_produto;
+
+
+
+
+
+
+CREATE DATABASE  IF NOT EXISTS `2info3_22_mod1`;
+USE `2info3_22_mod1`;
+--
+-- Table structure for table `clientes`
+--
+CREATE TABLE `clientes` (
+  `cod_cliente` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(150) NOT NULL,
+  `email` varchar(180) NOT NULL,
+  `login` varchar(80) NOT NULL,
+  `senha` varchar(20) NOT NULL,
+  `endereco_cobranca` varchar(300) NOT NULL,
+  PRIMARY KEY (`cod_cliente`),
+  UNIQUE KEY `email` (`email`),
+  UNIQUE KEY `login` (`login`)
+) ;
+INSERT INTO `clientes` VALUES (1,'Jose Ribeiro','jose.r@gmail.com','jose.ribeiro','12@#$56','Rua dos Comerciarios 23'),(2,'Maria Ribeiro','ribeiro.maria@gmail.com','maria.ribeiro','12@#$56dne52_9di(','Rua bla 01 23'),(3,'Pedro Camargo','pedro.ribeiro@gmail.com','pedro.ribeiro','12@#$0s,k45','Rua dos Empresarios 90823'),(4,'Julia Ribeiro','julia.ribeiro@gmail.com','julia.ribeiro','12@#$d83j56','Rua dos Bla78364 23'),(5,'Rose Nascimento','rose@gmail.com','rose.nascimento','12@#$0osl9','Rua dos blablabla 89723'),(6,'Daniela da Silva','daniela.silva@gmail.com','dani.silva','12@#$9skw4','Rua dos Comerciarios 90'),(7,'Roberto da Silva','roberto.silva@gmail.com','roberto.silva','12@#$2rw3','Rua dos Comerciarios 564'),(8,'Mario Jose Cardoso','jose.mario@gmail.com','mario.cardoso','1234@#$56','Monsenhor Gercino 56789'),(9,'Romeu Costa e Silva','romeu.cs@gmail.com','romeu.silva','sdf@#$56','Rua dos Comerciarios 234');
+--
+-- Table structure for table `produtos`
+--
+CREATE TABLE `produtos` (
+  `qtd_embalagem` int DEFAULT NULL,
+  `preco_embalagem` decimal(10,2) DEFAULT NULL,
+  `qtd_estoque` int DEFAULT NULL,
+  `cod_produto` int NOT NULL AUTO_INCREMENT,
+  `desc_produto` varchar(250) DEFAULT NULL,
+  `preco_unitario` decimal(10,2) DEFAULT NULL,
+  PRIMARY KEY (`cod_produto`)
+);
+INSERT INTO `produtos` VALUES (1,873.79,6789,5,'Mesa',873.79),(1,1373.79,6789,6,'Cadeira Gamer',1373.79),(1,7580.35,2345,7,'Notebook Lenovo',7580.35),(1,258.25,2345,8,'Teclado DELL com fio',258.25),(1,127.50,2345,9,'Mouse DELL com fio',127.50),(1,1235.48,2345,10,'Cadeira Gamer',1235.48),(1,875.98,2345,11,'Monitor DELL FULL HD',875.98),(1,875.93,2345,12,'Mesa escritrio 150x85',875.93),(1,2578.34,2345,13,'Projetor SONY 4K 120HZ',2578.34),(1,120.36,2345,14,'AVAST',120.36),(1,425.38,2345,15,'WINDOWS 11',425.38),(1,1890.35,2345,16,'Celular XIAOMI POCO3',1890.35);
+--
+-- Table structure for table `comentario`-
+CREATE TABLE `comentario` (
+  `cod_cliente` int NOT NULL,
+  `cod_produto` int NOT NULL,
+  `texto` varchar(500) DEFAULT NULL,
+  `titulo` varchar(100) DEFAULT NULL,
+  `dth` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  KEY `cod_produto` (`cod_produto`),
+  KEY `cod_cliente` (`cod_cliente`),
+  CONSTRAINT `comentario_ibfk_1` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`),
+  CONSTRAINT `comentario_ibfk_2` FOREIGN KEY (`cod_cliente`) REFERENCES `clientes` (`cod_cliente`)
+);
+INSERT INTO `comentario` VALUES (8,6,'Produto muito legal','Produto bom','2022-06-27 19:42:48'),(4,7,'Otimo Notebook, muito bom mesmo!','Comentario','2022-07-04 19:18:39'),(8,14,'Otimo avast, muito bom mesmo!','Comentario','2022-07-04 19:19:58'),(9,14,'Otimo avast, muito bom mesmo!','Comentario','2022-07-04 19:20:33'),(8,10,'Otimo muito bom mesmo!','Comentrio','2022-07-04 19:24:26'),(6,8,'Pessimo, ruimmesmo!','Comentrio','2022-07-04 19:24:26'),(9,6,'Nao gostei','Comentrio','2022-07-04 19:24:26'),(6,5,'Funciona muito bem','Comentrio','2022-07-04 19:24:26'),(2,6,'Nao funciona mesmo','Comentrio','2022-07-04 19:24:26'),(1,11,'Otimo muito bom mesmo!','Comentario','2022-07-11 18:53:07'),(2,12,'Nao gostei do produto!','Comentario','2022-07-11 18:53:07'),(3,16,'Detestei, ruim!','Comentario','2022-07-11 18:53:07'),(4,15,'Adorei, produto qualidade','Comentario','2022-07-11 18:53:07'),(5,13,'Gostei, mas poderia ser melhor!','Comentario','2022-07-11 18:53:07'),(6,11,'Boa qualidade, vamos aguardar um tempo para ver!','Comentario','2022-07-11 18:53:07'),(7,8,'Otimo produto!','Comentario','2022-07-11 18:53:07'),(8,9,'Detestei, estragou na primeira semana de uso.','Comentario','2022-07-11 18:53:07'),(9,5,'Vou trocar por outro, deu problema.','Comentario','2022-07-11 18:53:07'),(3,12,'Quebrou na primeira semana de uso.','Comentario','2022-07-11 18:53:07'),(5,13,'Bom mesmo!','Comentario','2022-07-11 18:53:07');
+--
+-- Table structure for table `fisica`
+--
+CREATE TABLE `fisica` (
+  `cpf` varchar(15) DEFAULT NULL,
+  `rg` varchar(15) DEFAULT NULL,
+  `cod_cliente` int NOT NULL,
+  KEY `cod_cliente` (`cod_cliente`),
+  CONSTRAINT `fisica_ibfk_1` FOREIGN KEY (`cod_cliente`) REFERENCES `clientes` (`cod_cliente`)
+);
+INSERT INTO `fisica` VALUES ('125.635.527-85','856.851.785-15',2),('235.456.852-23','852.635.426-52',3),('852.456.963-24','235.854.745-22',4),('452.639.985-85','265.852.456-25',7),('132.457.236-36','752.635.855-96',9);
+--
+-- Table structure for table `juridica`
+--
+CREATE TABLE `juridica` (
+  `cnpj` varchar(18) DEFAULT NULL,
+  `razao_social` varchar(120) DEFAULT NULL,
+  `cod_cliente` int NOT NULL,
+  KEY `cod_cliente` (`cod_cliente`),
+  CONSTRAINT `juridica_ibfk_1` FOREIGN KEY (`cod_cliente`) REFERENCES `clientes` (`cod_cliente`)
+);
+INSERT INTO `juridica` VALUES ('1548.568/895-151','ESPEC SENTAUM Esportes',1),('548.856/547-159','Rota do Jeans',5),('865.853/147-135','Açougue Jurema',6),('754.258/365-159','Casa do pão de queijo',8);
+--
+-- Table structure for table `pedidos`
+--
+CREATE TABLE `pedidos` (
+  `cod_pedido` int NOT NULL AUTO_INCREMENT,
+  `data_pedido` date DEFAULT NULL,
+  `data_entrega` date DEFAULT NULL,
+  `endereco_entrega` varchar(250) DEFAULT NULL,
+  `cod_cliente` int NOT NULL,
+  PRIMARY KEY (`cod_pedido`),
+  KEY `cod_cliente` (`cod_cliente`),
+  CONSTRAINT `pedidos_ibfk_1` FOREIGN KEY (`cod_cliente`) REFERENCES `clientes` (`cod_cliente`)
+);
+INSERT INTO `pedidos` VALUES (1,'2022-02-15','2022-02-20',NULL,1),(2,'2022-02-15','2022-02-20',NULL,4),(3,'2022-03-23','2022-03-28',NULL,1),(4,'2022-06-30','2022-07-04',NULL,1),(5,'2022-08-18','2022-08-23',NULL,6),(6,'2022-08-11','2022-08-16',NULL,2),(7,'2022-11-22','2022-11-27',NULL,3),(8,'2022-02-03','2022-02-08',NULL,5),(9,'2022-03-05','2022-03-10',NULL,3),(10,'2022-04-09','2022-04-14',NULL,7),(11,'2022-04-05','2022-04-10',NULL,8),(12,'2022-05-03','2022-05-08',NULL,9),(13,'2022-01-15','2022-01-20',NULL,6),(14,'2022-01-19','2022-01-24',NULL,7),(15,'2022-03-24','2022-03-29',NULL,8),(16,'2022-03-23','2022-03-28',NULL,8);
+--
+-- Table structure for table `itens_pedido`
+--
+CREATE TABLE `itens_pedido` (
+  `cod_produto` int NOT NULL,
+  `cod_pedido` int NOT NULL,
+  `qtd_prod` int DEFAULT NULL,
+  `situacao` char(1) NOT NULL DEFAULT 'S',
+  KEY `cod_produto` (`cod_produto`),
+  KEY `cod_pedido` (`cod_pedido`),
+  CONSTRAINT `itens_pedido_ibfk_1` FOREIGN KEY (`cod_produto`) REFERENCES `produtos` (`cod_produto`),
+  CONSTRAINT `itens_pedido_ibfk_2` FOREIGN KEY (`cod_pedido`) REFERENCES `pedidos` (`cod_pedido`)
+);
+INSERT INTO `itens_pedido` VALUES (5,1,1,'S'),(6,1,1,'S'),(7,2,5,'S'),(8,2,5,'S'),(9,2,5,'S'),(10,3,1,'S'),(11,4,3,'S'),(12,5,3,'S'),(13,6,7,'S'),(14,7,3,'S'),(15,8,4,'S'),(16,9,8,'S'),(11,10,1,'S'),(11,11,4,'S'),(8,12,23,'S'),(9,12,23,'S'),(6,13,1,'S'),(7,14,3,'S'),(10,15,12,'S'),(14,16,1,'S');
+
+
