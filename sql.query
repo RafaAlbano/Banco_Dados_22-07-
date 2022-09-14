@@ -118,3 +118,24 @@ CREATE TABLE `itens_pedido` (
 INSERT INTO `itens_pedido` VALUES (5,1,1,'S'),(6,1,1,'S'),(7,2,5,'S'),(8,2,5,'S'),(9,2,5,'S'),(10,3,1,'S'),(11,4,3,'S'),(12,5,3,'S'),(13,6,7,'S'),(14,7,3,'S'),(15,8,4,'S'),(16,9,8,'S'),(11,10,1,'S'),(11,11,4,'S'),(8,12,23,'S'),(9,12,23,'S'),(6,13,1,'S'),(7,14,3,'S'),(10,15,12,'S'),(14,16,1,'S');
 
 
+select * from logradouro;
+
+select * from logradouro where cep = "89231600";
+
+select * from bairros where cd_bairro = 14050;
+
+select ds_logradouro_nome, ds_bairro_nome, ds_cidade_nome, ds_uf_nome, ds_uf_sigla
+from logradouro, bairros, cidades, uf
+where cep = "89231600" and
+bairros_cd_bairro = cd_bairro and 
+cidade_cd_cidade = cd_cidade and 
+uf_cd_uf = cd_uf;
+
+select * from cad_usuario;
+
+select nome,ds_logradouro_nome, ds_bairro_nome, ds_cidade_nome, ds_uf_nome, ds_uf_sigla
+from logradouro, bairros, cidades, uf, cad_usuario
+where bairros_cd_bairro = cd_bairro and 
+cidade_cd_cidade = cd_cidade and 
+uf_cd_uf = cd_uf and 
+log_cd_logradouro = cd_logradouro;
